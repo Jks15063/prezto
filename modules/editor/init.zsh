@@ -255,6 +255,12 @@ else
   bindkey -M vicmd "/" history-incremental-search-forward
 fi
 
+bindkey -M viins "$key_info[Control]E" \
+  history-incremental-pattern-search-backward
+
+bindkey -M viins "$key_info[Control]F" \
+  history-incremental-pattern-search-forward
+
 #
 # Emacs and Vi Key Bindings
 #
