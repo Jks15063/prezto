@@ -154,9 +154,6 @@ zstyle ':prezto:module:terminal:window-title' format '%s'
 # Set the tab title format.
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 
-# Better ls coloring when using solarized terminal theme
-eval `dircolors ../../dircolors-solarized/dircolors.ansi-light`
-
 #
 # Tmux
 #
