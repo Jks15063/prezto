@@ -1,7 +1,7 @@
 #
-# A form of the Sorin theme. Various tweaks:
+# A fork of the Sorin theme. Various tweaks:
 # - colors work better with solarized theme
-# - better display of hashed directories
+# - better display of hashed (named) directories
 # - slight changes to how git information is presented
 #
 # Authors:
@@ -10,10 +10,33 @@
 # Tweaks by:
 #   Nir Friedman <quicknir@gmail.com>
 
+# 16 Solarized Terminal Colors
+# -- ---------------
+#  0 base02 (light black)
+#  1 red
+#  2 green
+#  3 yellow
+#  4 blue
+#  5 magenta
+#  6 cyan
+#  7 base2 (dark white)
+#  8 base03 (dark black)
+#  9 orange
+# 10 base01 (dark dark grey)
+# 11 base00 (dark grey)
+# 12 base0 (light grey)
+# 13 violet
+# 14 base1 (light light grey)
+# 15 base3 (bright white)
+
 # Load dependencies.
 pmodload 'helper'
+source ${ZDOTDIR:-$HOME}/.zprezto/modules/prompt/functions/prompt_sorin_setup
 
-function prompt_nir_pwd {
+# Looks like zsh allows us to redefine a function.
+# In this case, we redefine the calculation of the pwd string
+# so that hashed directories are respected
+function prompt_sorin_pwd {
   # Expand pwd taking into account hashed directories
   local pwd_esc="%~"
   local pwd_expand=${(%)pwd_esc}
@@ -41,29 +64,20 @@ function prompt_nir_pwd {
   _prompt_nir_pwd=${(j:/:)arr}
 }
 
-function prompt_nir_precmd {
-  setopt LOCAL_OPTIONS
-  unsetopt XTRACE KSH_ARRAYS
-
-  # Format PWD.
-  prompt_nir_pwd
-
-  # Get Git repository information.
-  if (( $+functions[git-info] )); then
-    git-info
-  fi
-}
-
+# Different setup function, mostly to specify different git info, change some
+# colors of the prompts. Notice that we still use the sorin precmd.
 function prompt_nir_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
   prompt_opts=(cr percent subst)
+  _prompt_sorin_precmd_async_pid=0
+  _prompt_sorin_precmd_async_data="${TMPPREFIX}-prompt_sorin_data"
 
   # Load required functions.
   autoload -Uz add-zsh-hook
 
   # Add hook for calling git-info before each command.
-  add-zsh-hook precmd prompt_nir_precmd
+  add-zsh-hook precmd prompt_sorin_precmd
 
   # Set editor-info parameters.
   zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
@@ -87,14 +101,11 @@ function prompt_nir_setup {
   zstyle ':prezto:module:git:info:unmerged' format ' %F{yellow}═%f'
   zstyle ':prezto:module:git:info:untracked' format ' %F{14}%u◼%f'
   zstyle ':prezto:module:git:info:keys' format \
-    'prompt' '%s' \
-    'rprompt' '%b%s%A%B%S%a%d%m%r%U%u'
-	
-    #'prompt' ' %F{blue}git%f$(coalesce "%b" "%p" "%c")%s' \
+    'status' '$(coalesce "%b" "%p" "%c")%s%A%B%S%a%d%m%r%U%u'
   
 # Define prompts.
-  PROMPT='${SSH_TTY:+"%F{red}%n%f@%F{yellow}%m%f "}%F{cyan}${_prompt_nir_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
-  RPROMPT='${editor_info[overwrite]} %(?:: %F{red}⏎%f) ${VIM:+" %B%F{green}V%f%b"}${INSIDE_EMACS:+" %B%F{green}E%f%b"}${git_info[rprompt]}'
+  PROMPT='${SSH_TTY:+"%F{red}%n%f@%F{yellow}%m%f "}%F{cyan}${_prompt_nir_pwd}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
+  RPROMPT=''
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
