@@ -152,3 +152,8 @@ zstyle ':completion:*:ssh:*' group-order hosts-domain hosts-host hosts-ipaddr
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
+
+# If you don't want completion to trigger when you (accidentally) hit tab in an NFS dir, uncomment below
+#zstyle ':completion:*:*files' ignored-patterns '/apps/*'
+#zstyle ':completion:*:*directories' ignored-patterns '/apps/*'
+#zstyle ':completion:*:*commands' ignored-patterns '/apps/*'
