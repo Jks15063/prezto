@@ -261,6 +261,9 @@ bindkey -M viins "$key_info[Control]E" \
 bindkey -M viins "$key_info[Control]F" \
   history-incremental-pattern-search-forward
 
+bindkey -M viins 'fd' vi-cmd-mode
+bindkey -M viins 'df' vi-cmd-mode
+
 #
 # Emacs and Vi Key Bindings
 #

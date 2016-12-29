@@ -50,7 +50,7 @@ zstyle ':prezto:load' pmodule \
 zstyle ':prezto:module:editor' key-bindings 'vi'
 
 # For better vi usability, reduce key delay/timeout
-KEYTIMEOUT=1
+KEYTIMEOUT=10
 
 # Auto convert .... to ../..
 # zstyle ':prezto:module:editor' dot-expansion 'yes'
