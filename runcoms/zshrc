@@ -10,6 +10,18 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# This loads nvm
+export NVM_DIR="/Users/Jake/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# Load RVM into a shell session *as a function*
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# Load chruby
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+RUBIES+=(~/.rvm/rubies/*)
+
 # Better ls coloring when using solarized terminal theme
 # Start by figuring out where dircolors is, by figuring out where this file is
 location=$(readlink -f ${(%):-%N})
