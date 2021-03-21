@@ -34,4 +34,4 @@ export TERM=xterm-256color
 # Ensure that external editor launches correctly
 export VISUAL=vimx
 
-alias ls='gls --color=auto'
+# alias ls='gls --color=auto'
