@@ -455,3 +455,5 @@ else
 fi
 
 unset key{,map,_bindings}
+
+bindkey -M viins 'jk' vi-cmd-mode
